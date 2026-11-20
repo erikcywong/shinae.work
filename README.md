@@ -164,3 +164,11 @@ var/        运行时状态（state.db + tickets/<id>/ + feishu.env），可整�
 ## 许可
 
 代码 MIT。方法学文档与因子表以 CC BY 4.0 提供，**且仅限 draft 用途**。
+
+## 发布与域名
+
+- repo: https://github.com/erikcywong/shinae.work
+- 站点（GitHub Pages，源 = main 分支 /docs）：https://erikcywong.github.io/shinae.work/
+- 已绑定自定义域名：os.shinae.work（仓库 Pages 设置里已生效；DNS 加一条 os → erikcywong.github.io 的 CNAME，证书自动签发）
+- www.shinae.work / 裸域 shinae.work：**已被另一个 GitHub 账号声明**，需先在那个账号里移除该域名（或走 GitHub 的 TXT 校验认领），之后才能绑到本仓库
+- Pages 只托管静态页；内核（Python）跑在本地或自己的服务器上
