@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coffee Super-Agent OS</title>
+<link rel="stylesheet" href="os.css">
+</head>
+<body>
+
+<div id="boot">
+  <div class="boot-logo">COFFEE SUPER-AGENT OS</div>
+  <div class="boot-sub">ROUTER · WORKER · LEDGER · WATCHDOG</div>
+  <div id="bootlog"></div>
+  <button class="boot-skip" data-act="skip-boot">skip →</button>
+</div>
+
+<div id="shell">
+  <header class="topbar">
+    <div class="brand"><b>Coffee Super-Agent OS</b><span id="ver">v0.1</span></div>
+    <div class="pill" id="pill-mode"><span class="dot" id="mode-dot"></span><span id="mode-text">—</span></div>
+    <div class="pill" id="pill-policy"><span id="policy-text">—</span></div>
+    <div class="pill" id="pill-attn" title="questions waiting for a person"><span class="dot warn" id="attn-dot"></span><span id="attn-text">—</span></div>
+    <div class="pill" id="pill-link"><span class="dot idle" id="link-dot"></span><span id="link-text">connecting</span></div>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="btn-pause" data-act="toggle-pause">pause</button>
+    <button class="btn ghost" data-act="change-token" title="change access token">令牌</button>
+    <button class="btn ghost" data-act="lang" id="btn-lang">EN</button>
+    <span class="pill mono" id="clock">--:--:--</span>
+  </header>
+
+  <div class="layout">
+    <nav class="dock" id="dock"></nav>
+    <main id="main"><div class="empty">loading…</div></main>
+  </div>
+</div>
+
+<div class="offline" id="offline">connection lost — the kernel may have stopped; retrying every 4s…</div>
+<div class="toast" id="toast"></div>
+
+<script src="app.js?v=20261121b"></script>
+</body>
+</html>

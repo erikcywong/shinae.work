@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>shinae.work — Coffee Super-Agent OS</title>
+<meta name="description" content="An agent operating system for aeroponic coffee and carbon accounting: Router/Worker, hash-chained ledger, Feishu loop.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<style>
+  :root{
+    --bg:#000;--line:#2f3336;--text:#e7e9ea;--dim:#71767b;--accent:#1d9bf0;
+    --green:#00ba7c;--surface:#16181c;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+    --sans:-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+    font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 64px}
+  header{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .mark{width:38px;height:38px;border-radius:50%;background:var(--accent);display:grid;place-items:center;
+    font-size:20px;color:#fff;flex:0 0 auto}
+  .brand b{font-size:18px;letter-spacing:-.2px}
+  .brand span{color:var(--dim);font-size:13px;margin-left:8px}
+  nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  nav a{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;color:var(--text)}
+  nav a:hover{background:rgba(231,233,234,.08);text-decoration:none}
+  h1{font-size:34px;line-height:1.2;letter-spacing:-.8px;margin:44px 0 10px;font-weight:800}
+  h1 .cn{display:block;font-size:20px;color:var(--dim);font-weight:600;margin-top:10px;letter-spacing:0}
+  .lead{color:var(--dim);font-size:17px;max-width:720px}
+  .lead b{color:var(--text);font-weight:600}
+  .grid{display:grid;gap:14px;margin:34px 0}
+  @media(min-width:760px){.grid.c3{grid-template-columns:repeat(3,1fr)}}
+  .card{border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .card h3{margin:0 0 6px;font-size:14px;color:var(--dim);font-weight:700;letter-spacing:.2px}
+  .card p{margin:0;font-size:14.5px;color:var(--text)}
+  .card .cn2{display:block;color:var(--dim);font-size:13px;margin-top:6px}
+  pre{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;
+    overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.6}
+  code{font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--line);
+    border-radius:6px;padding:1px 5px}
+  h2{font-size:20px;margin:38px 0 10px;letter-spacing:-.3px}
+  .note{border:1px solid rgba(255,212,0,.35);background:rgba(255,212,0,.06);border-radius:14px;
+    padding:12px 14px;font-size:14px;color:#f2dd8a;margin:18px 0}
+  .note b{color:#ffd400}
+  ul{color:var(--dim);font-size:14.5px;padding-left:20px}
+  li{margin:5px 0}
+  li b{color:var(--text);font-weight:600}
+  footer{border-top:1px solid var(--line);margin-top:44px;padding-top:18px;color:var(--dim);font-size:13px;
+    display:flex;gap:14px;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:12px;color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark">☕</div>
+    <div class="brand"><b>shinae.work</b><span>Coffee Super-Agent OS</span></div>
+    <nav>
+      <a href="https://github.com/erikcywong/shinae.work">GitHub</a>
+      <a href="https://github.com/erikcywong/shinae.work/blob/main/docs/005-feishu.md">Feishu</a>
+      <a href="https://github.com/erikcywong/shinae.work/blob/main/docs/004-methodology.md">Methodology</a>
+    </nav>
+  </header>
+
+  <h1>An agent OS for aeroponic coffee — and the carbon numbers behind it.
+    <span class="cn">雾化咖啡的智能体操作系统，以及它背后的碳数字。</span>
+  </h1>
+  <p class="lead">
+    One sentence in, a <b>Router</b> decides whether it is work, a <b>Worker</b> runs it in its own
+    directory with a bounded tool set, and the result returns to where it came from — the panel, or a
+    Feishu chat. Every number lands in an append-only hash chain you can recompute.
+    <span class="cn2">一句话进来，Router 判断是不是该干的活，Worker 在自己的目录里带受限工具执行，结果回到它来的地方；
+    每个数字都落进可重算的追加式哈希链。</span>
+  </p>
+
+  <div class="grid c3">
+    <div class="card">
+      <h3>ROUTER / WORKER</h3>
+      <p>Two layers, one writer. Only the Router creates Tickets; a Worker may only report.</p>
+      <span class="cn2">双层架构，单一写者：只有 Router 能建工单，Worker 只能报告。</span>
+    </div>
+    <div class="card">
+      <h3>HASH-CHAINED LEDGER</h3>
+      <p>Each run appends rows linked by SHA-256. A recompute is a new revision, never an edit.</p>
+      <span class="cn2">每次核算追加一串 SHA-256 链行；重算是新版本，永不改写旧行。</span>
+    </div>
+    <div class="card">
+      <h3>FEISHU LOOP</h3>
+      <p>Commands and questions in a chat open Tickets; cards and files come back to the same chat.</p>
+      <span class="cn2">群里下指令 → 建单 → 卡片与附件回到同一条会话。</span>
+    </div>
+  </div>
+
+  <h2>Run it</h2>
+  <pre>git clone https://github.com/erikcywong/shinae.work
+cd shinae.work
+python app/server.py            <span style="color:#71767b"># zero dependencies, SQLite state</span>
+python app/server.py --live     <span style="color:#71767b"># workers planned by a model</span></pre>
+  <p class="lead" style="font-size:15px">
+    The panel asks for a local access token on first run (printed at startup, stored in
+    <code>var/auth.env</code>). <span class="tag">python tests/smoke.py</span>
+    <span class="tag">node tests/ui_smoke.mjs</span>
+  </p>
+
+  <div class="note">
+    <b>This page is static.</b> GitHub Pages cannot run the Python kernel, so the interactive OS runs
+    on your machine (or a small server); this site is the project page and documentation.
+    <br>本页是静态站点：GitHub Pages 不跑 Python，内核在你自己的机器或服务器上运行。
+  </div>
+
+  <h2>What it is not</h2>
+  <ul>
+    <li><b>Not a certified carbon system.</b> The factor set is reference-grade and marked unverified; the
+      boundary is cradle-to-gate. No external labels.</li>
+    <li><b>Not a generic agent framework.</b> It is one deployment of the two-layer idea for coffee.</li>
+    <li><b>Not multi-tenant yet.</b> One workspace, one operator, one token.</li>
+  </ul>
+
+  <footer>
+    <span>MIT · docs drafted 2026-11-21</span>
+    <span>Router · Worker · Ledger · Watchdog</span>
+    <span><a href="https://github.com/erikcywong/shinae.work">github.com/erikcywong/shinae.work</a></span>
+  </footer>
+</div>
+</body>
+</html>
