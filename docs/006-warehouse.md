@@ -5,7 +5,7 @@
 > 飞书负责"让人在群里看见并拍板"，Agent 负责"不让人绕过规则"。
 
 - 版本：wh v1（2026-11-22）
-- 代码：`app/warehouse.py` · 面板 `web/warehouse.html` · 测试 `tests/wh_smoke.py`（内核为本地原型，源码按需提供；公开页见 [`warehouse.html`](warehouse.html)）
+- 代码：`app/warehouse.py` · 面板 `web/warehouse.html` · 测试 `tests/wh_smoke.py`（**内核源码暂未公开**，按 Erik 指示待通知；公开页见 [`warehouse.html`](warehouse.html)）
 - 运行：`python app/server.py` → `http://127.0.0.1:8787/warehouse.html`（与碳核证面板同一个内核、同一个 token）
 - 边界：原型；非 WMS；不对外签发碳标签；环境阈值为**示例且未核证**；演示数据为合成数据。
 
