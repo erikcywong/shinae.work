@@ -60,6 +60,7 @@
     <nav>
       <a href="https://github.com/erikcywong/shinae.work">GitHub</a>
       <a href="warehouse.html">Warehouse</a>
+      <a href="grow.html">Grow</a>
       <a href="https://github.com/erikcywong/shinae.work/blob/main/docs/005-feishu.md">Feishu</a>
       <a href="https://github.com/erikcywong/shinae.work/blob/main/docs/004-methodology.md">Methodology</a>
     </nav>
@@ -120,6 +121,19 @@ python app/server.py --live     <span style="color:#71767b"># workers planned by
     <a href="warehouse.html">See the snapshot and the Feishu collaboration model →</a>
     <span class="cn2">同一个内核跑咖啡仓存：绿咖啡 FIFO、熟豆 FEFO，过期/隔离批次不出库；改数量必须过计划 → Critic → dry-run → 第二个人 → 执行 → 核验。
     它与飞书是<b>协作</b>而非替代：卡片与指令在群里，规则与哈希链在内核里。</span>
+  </p>
+
+  <h2>Third vertical: fog cultivation</h2>
+  <p class="lead" style="font-size:15px">
+    The same kernel now runs <b>phenology</b>: stages form a DAG (canopy shaping runs in parallel with root
+    renewal, so float actually exists), the critical path is recomputed from <b>remaining</b> durations, and the
+    three irreversible acts — advance a stage, change a recipe, harvest — each pass a deterministic critic
+    (bounds, step limit, sample freshness, minimum days, evidence window) and a second signature.
+    A harvest files a warehouse inbound draft; it does not merge the two approvals.
+    <a href="grow.html">See the snapshot and the gate log →</a>
+    <span class="cn2">第三个垂直域跑物候：阶段构成 DAG（树冠整形与根系更新并行，浮动才真实存在），关键路径按<b>剩余工期</b>重算；
+    三个不可逆动作——推进阶段、改配方、采收——都要过确定性 Critic（边界、单步上限、样本新鲜度、最短天数、证据窗口）与第二个签名。
+    采收只生成仓存入库草稿，两个审批不合并。</span>
   </p>
 
   <h2>What it is not</h2>

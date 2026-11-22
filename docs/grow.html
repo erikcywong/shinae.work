@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雾化咖啡种植 Super-agent — 物候 CPM · 配方闸门 · 四眼审批</title>
+<meta name="description" content="第三个垂直域：雾化咖啡种植。物候期关键路径（CPM）用剩余工期重算，配方变更过确定性 Critic 与四眼审批，舱内读数越界即告警，采收自动生成仓存入库单，全过程哈希链可验。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌫️</text></svg>">
+<style>
+:root{--bg:#000;--line:#2f3336;--text:#e7e9ea;--dim:#71767b;--accent:#1d9bf0;
+  --green:#00ba7c;--amber:#ffd400;--red:#f4212e;--surface:#16181c;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --sans:-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.55}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 20px 64px}
+header{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mark{width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,#1d9bf0,#8b5cf6);
+  display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+.brand b{font-size:18px;letter-spacing:-.2px}
+.brand span{color:var(--dim);font-size:12.5px;margin-left:8px;font-family:var(--mono)}
+nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+nav a{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;color:var(--text)}
+nav a:hover{background:rgba(231,233,234,.08);text-decoration:none}
+h1{font-size:31px;line-height:1.2;letter-spacing:-.7px;margin:38px 0 10px;font-weight:800}
+h1 .cn{display:block;font-size:18px;color:var(--dim);font-weight:600;margin-top:10px;letter-spacing:0}
+.lead{color:var(--dim);font-size:17px;max-width:780px}
+.lead b{color:var(--text);font-weight:600}
+h2{font-size:20px;margin:36px 0 10px;letter-spacing:-.3px}
+h2 small{color:var(--dim);font-weight:500;font-size:13px;margin-left:8px;letter-spacing:0}
+.note{border:1px solid rgba(255,212,0,.35);background:rgba(255,212,0,.06);border-radius:14px;
+  padding:12px 14px;font-size:14px;color:#f2dd8a;margin:18px 0}
+.note b{color:var(--amber)}
+.kpis{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:22px 0}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:22px;font-weight:750;letter-spacing:-.3px}
+.kpi span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.6px}
+.kpi small{display:block;color:var(--dim);font-size:12px;margin-top:3px}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow:auto;
+  font-family:var(--mono);font-size:12.5px;line-height:1.6}
+code{font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--line);
+  border-radius:6px;padding:1px 5px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid #222}
+th{color:var(--dim);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.mono{font-family:var(--mono);font-size:12px}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:1px 8px;font-size:11px}
+.ok{color:var(--green);border-color:rgba(0,186,124,.4)}
+.warn{color:var(--amber);border-color:rgba(255,212,0,.35)}
+.bad{color:var(--red);border-color:rgba(244,33,46,.35)}
+.boundary li{font-size:13.5px;color:var(--dim);margin:4px 0}
+.stages{display:grid;gap:4px;margin:12px 0}
+.stage{display:grid;grid-template-columns:150px 1fr 92px;gap:10px;align-items:center;font-size:12.5px}
+.stage .lbl{font-family:var(--mono);color:var(--dim)}
+.stage .track{height:12px;background:rgba(255,255,255,.04);border-radius:6px;position:relative}
+.stage .bar{position:absolute;top:0;height:12px;border-radius:6px;background:#3a3f45;border:1px solid #4a5057}
+.stage .bar.critical{background:rgba(244,33,46,.32);border-color:rgba(244,33,46,.6)}
+.stage .bar.done{background:rgba(0,186,124,.28);border-color:rgba(0,186,124,.55)}
+.stage .bar.active{background:rgba(29,155,240,.38);border-color:rgba(29,155,240,.75)}
+.stage .val{font-family:var(--mono);color:var(--dim);text-align:right;font-size:11.5px}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="mark">🌫️</div>
+  <div class="brand"><b>雾化咖啡种植 Super-agent</b><span>third vertical · Coffee Super-Agent OS</span></div>
+  <nav>
+    <a href="./">总览</a>
+    <a href="warehouse.html">仓存域</a>
+    <a href="https://github.com/erikcywong/shinae.work">repo</a>
+  </nav>
+</header>
+
+<h1>把"什么时候能推进下一个物候期"<br>变成一个能被反查的判断。<span class="cn">雾化种植 · 物候 CPM · 配方闸门 · 四眼审批 · 哈希链</span></h1>
+<p class="lead">同一个内核上的第三个垂直域。工作单元是 <b>批次 × 雾化舱 × 物候期</b>；不可逆动作有三个——
+推进阶段、改配方、采收——每个都要过 <b>确定性 Critic → 四眼审批 → 执行 → 校验</b>，
+结果回到飞书同一条会话。下面所有数字都是这次构建真实跑出来的快照。</p>
+
+<div class="note"><b>快照，不是实时系统。</b>生成于 2026-11-22T16:33:03Z，命令 <code>python tools/build_grow_page.py --var var\grow-publish</code>。
+阈值状态 <b>unverified</b>：示例工程护栏（EC 0.8–2.4 mS/cm、pH 5.2–6.8、气温 16–30 °C、RH 55–95 %、水温 16–24 °C、雾化 3–60 s on / 30–1800 s off、DLI 8–30），未经核证；请按品种、基质与设备实测值替换后再启用自动下发。</div>
+
+<div class="kpis">
+  <div class="kpi"><span>cabins</span><b>3</b><small>雾化舱</small></div>
+  <div class="kpi"><span>active batches</span><b>3</b><small>在种批次</small></div>
+  <div class="kpi"><span>awaiting</span><b>0</b><small>待审批</small></div>
+  <div class="kpi"><span>blocked</span><b>1</b><small>被 Critic 拦下</small></div>
+  <div class="kpi"><span>done</span><b>2</b><small>已执行</small></div>
+  <div class="kpi"><span>max drift</span><b>14.0 d</b><small>预测 vs 基线（阈值 3 d）</small></div>
+  <div class="kpi"><span>samples 24h</span><b>108</b><small>读数（合成）</small></div>
+  <div class="kpi"><span>harvested</span><b>0.0 kg</b><small>生豆（已记账）</small></div>
+</div>
+
+<h2>物候 DAG 与关键路径<small>剩余工期重算 · V2 ∥ R1 才有浮动</small></h2>
+<p class="lead" style="font-size:14.5px">批次 <code>CB-B2-01</code> · Arabica SL28 · 活跃阶段
+<b>V2+R1</b> · 预测完工 <b>2027-06-04</b> vs 基线 <b>2027-06-03</b>
+· 关键路径 <code>P0 → V1 → V2 → F1 → F2 → F3 → F4 → F5 → H1</code></p>
+<div class="stages"><div class="stage"><div class="lbl">P0 驯化苗上架</div><div class="track"><div class="bar critical done" style="left:0.00%;width:2.36%"></div></div><div class="val">done</div></div>
+<div class="stage"><div class="lbl">V1 营养生长</div><div class="track"><div class="bar critical done" style="left:2.36%;width:30.41%"></div></div><div class="val">done</div></div>
+<div class="stage"><div class="lbl">V2 树冠整形</div><div class="track"><div class="bar critical active" style="left:32.77%;width:7.09%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">R1 根系更新</div><div class="track"><div class="bar active" style="left:32.77%;width:4.73%"></div></div><div class="val">2.0 d</div></div>
+<div class="stage"><div class="lbl">F1 花芽诱导</div><div class="track"><div class="bar critical pending" style="left:39.86%;width:11.82%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">F2 开花</div><div class="track"><div class="bar critical pending" style="left:51.69%;width:3.38%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">F3 坐果</div><div class="track"><div class="bar critical pending" style="left:55.07%;width:7.09%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">F4 果实膨大</div><div class="track"><div class="bar critical pending" style="left:62.16%;width:23.65%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">F5 成熟</div><div class="track"><div class="bar critical pending" style="left:85.81%;width:9.46%"></div></div><div class="val">0.0 d</div></div>
+<div class="stage"><div class="lbl">H1 采收</div><div class="track"><div class="bar critical pending" style="left:95.27%;width:4.73%"></div></div><div class="val">0.0 d</div></div></div>
+
+<h2>闸门不是口号：两次真实提交<small>一次被拦下，一次放行后由第二个人批准</small></h2>
+<pre>gwt_7e7183b6d891 · A1 ec 1.8→3.4 · blocked
+  ✕ bounds: ec=3.4mS/cm vs 允许 0.8–2.4
+  ✕ jump: 单次变化 1.6mS/cm vs 上限 0.4
+  ✓ fresh_data: 最新样本 2026-11-22T16:31:03Z（要求 15 分钟内）
+  ✓ cabin_state: 舱状态 running
+  ✓ rate_limit: 24h 内已提交 0 次配方变更（上限 2）
+  ✓ vpd_envelope: 变更后 VPD≈0.582 kPa vs 建议 0.4–1.6（未核证）
+
+approve → ok · chain ok · 6 rows
+
+gwt_db349044fd00 · CB-B2-01 开启 R1 · done
+  ✓ to_pending: R1 状态 pending
+  ✓ deps: R1 前序 V1:done
+  ✓ cabin_state: 舱 running
+  ✓ evidence.instrumented: 并行开启 R1：24h 内 36 条读数（要求 ≥4），在界内 36（100%）
+approve → ok · active stages now V2+R1
+
+注：被拦下的单停留在 blocked，不自动重试、不静默丢弃；只有 awaiting_approval 能被批准。</pre>
+
+<h2>哈希链<small>prev | sha256(body) · 与仓存域同一构造</small></h2>
+<table><thead><tr><th>at</th><th>task</th><th>step</th><th>actor</th><th>hash</th></tr></thead><tbody>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">fee0164af7ac974572…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">bd3a5dfb06eff98ec5…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">dbd6ae1501aefe7ea7…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">cd158a0fb71a7ed009…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">critic.checked</td><td class="mono">critic</td><td class="mono">b93a712ff695eda8ba…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">plan.created</td><td class="mono">erik.requester</td><td class="mono">0676ab4f6c50f5b5a2…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">2c9a14f72b19d69713…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">909d90bb5c07f98622…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">54d6da593a95d9dcdc…</td></tr>
+<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">1b319442df098bef08…</td></tr>
+</tbody></table>
+
+<h2>它明确不做什么</h2>
+<ul class="boundary"><li>· 研究原型：不驱动真实施肥/雾化 PLC，不外发产量或品质承诺。</li>
+<li>· 阈值 unverified：示例工程护栏（EC 0.8–2.4 mS/cm、pH 5.2–6.8、气温 16–30 °C、RH 55–95 %、水温 16–24 °C、雾化 3–60 s on / 30–1800 s off、DLI 8–30），未经核证；请按品种、基质与设备实测值替换后再启用自动下发。</li>
+<li>· 物候期长（plan_days）是示例排程，不是品种标定；改品种请同时改 DAG 与证据窗口。</li>
+<li>· 传感器序列为合成数据（sim.sensor）；真实网关接入前，一切曲线只用于演示闸门。</li>
+<li>· 审计链只证明本机写入顺序，不是外部时间戳或第三方见证。</li>
+<li>· 阶段推进不可回退：要回退必须新建批次并写明依据。</li></ul>
+
+<h2>自己跑</h2>
+<pre>python app/server.py                  # http://127.0.0.1:8787/grow.html
+python tests/grow_smoke.py            # 领域 + 闸门 + 四眼 + 链 + 飞书
+python app/grow.py                    # 一次全部：CPM → 拦截 → 审批 → 并行支路</pre>
+
+<footer>
+Research prototype · 不驱动真实 PLC、不签发产量或品质承诺、读数为合成数据。
+代码 MIT，方法与阈值文档 CC BY 4.0（仅 draft 用途）。来源会话
+<code>chat.deepseek.com/share/4tm4ifxlchkksetj0e</code>（直连 403，经只读镜像读取），
+映射与放弃项见 <code>docs/007-grow.md</code>。
+</footer>
+</div>
+</body>
+</html>
