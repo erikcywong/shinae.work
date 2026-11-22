@@ -79,7 +79,7 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:v
 推进阶段、改配方、采收——每个都要过 <b>确定性 Critic → 四眼审批 → 执行 → 校验</b>，
 结果回到飞书同一条会话。下面所有数字都是这次构建真实跑出来的快照。</p>
 
-<div class="note"><b>快照，不是实时系统。</b>生成于 2026-11-22T16:33:03Z，命令 <code>python tools/build_grow_page.py --var var\grow-publish</code>。
+<div class="note"><b>快照，不是实时系统。</b>生成于 2026-11-22T16:34:46Z，命令 <code>python tools/build_grow_page.py --var var\grow-publish</code>。
 阈值状态 <b>unverified</b>：示例工程护栏（EC 0.8–2.4 mS/cm、pH 5.2–6.8、气温 16–30 °C、RH 55–95 %、水温 16–24 °C、雾化 3–60 s on / 30–1800 s off、DLI 8–30），未经核证；请按品种、基质与设备实测值替换后再启用自动下发。</div>
 
 <div class="kpis">
@@ -109,17 +109,17 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:v
 <div class="stage"><div class="lbl">H1 采收</div><div class="track"><div class="bar critical pending" style="left:95.27%;width:4.73%"></div></div><div class="val">0.0 d</div></div></div>
 
 <h2>闸门不是口号：两次真实提交<small>一次被拦下，一次放行后由第二个人批准</small></h2>
-<pre>gwt_7e7183b6d891 · A1 ec 1.8→3.4 · blocked
+<pre>gwt_21e49f56ff35 · A1 ec 1.8→3.4 · blocked
   ✕ bounds: ec=3.4mS/cm vs 允许 0.8–2.4
   ✕ jump: 单次变化 1.6mS/cm vs 上限 0.4
-  ✓ fresh_data: 最新样本 2026-11-22T16:31:03Z（要求 15 分钟内）
+  ✓ fresh_data: 最新样本 2026-11-22T16:32:46Z（要求 15 分钟内）
   ✓ cabin_state: 舱状态 running
   ✓ rate_limit: 24h 内已提交 0 次配方变更（上限 2）
   ✓ vpd_envelope: 变更后 VPD≈0.582 kPa vs 建议 0.4–1.6（未核证）
 
 approve → ok · chain ok · 6 rows
 
-gwt_db349044fd00 · CB-B2-01 开启 R1 · done
+gwt_f571893e7097 · CB-B2-01 开启 R1 · done
   ✓ to_pending: R1 状态 pending
   ✓ deps: R1 前序 V1:done
   ✓ cabin_state: 舱 running
@@ -130,16 +130,16 @@ approve → ok · active stages now V2+R1
 
 <h2>哈希链<small>prev | sha256(body) · 与仓存域同一构造</small></h2>
 <table><thead><tr><th>at</th><th>task</th><th>step</th><th>actor</th><th>hash</th></tr></thead><tbody>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">fee0164af7ac974572…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">bd3a5dfb06eff98ec5…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">dbd6ae1501aefe7ea7…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">cd158a0fb71a7ed009…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">critic.checked</td><td class="mono">critic</td><td class="mono">b93a712ff695eda8ba…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_db349044fd00</td><td class="mono">plan.created</td><td class="mono">erik.requester</td><td class="mono">0676ab4f6c50f5b5a2…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">2c9a14f72b19d69713…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">909d90bb5c07f98622…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">54d6da593a95d9dcdc…</td></tr>
-<tr><td class="mono">2026-11-22T16:33</td><td class="mono">gwt_1f6e654215f4</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">1b319442df098bef08…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">f795886be33bb29cf5…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">ff1c774d444851dd67…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">aeac71f3951dde7b56…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">db9b01e906395c1a2c…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">critic.checked</td><td class="mono">critic</td><td class="mono">5b5aa0f3e4a1add656…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_f571893e7097</td><td class="mono">plan.created</td><td class="mono">erik.requester</td><td class="mono">1e889f4425224c2415…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_390dc392c5c4</td><td class="mono">verified</td><td class="mono">verifier</td><td class="mono">9c35993a2c453e35ce…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_390dc392c5c4</td><td class="mono">executed</td><td class="mono">erik.lead</td><td class="mono">a23447bddda9105fc5…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_390dc392c5c4</td><td class="mono">approval.granted</td><td class="mono">erik.lead</td><td class="mono">92bf9e287c4c14eb55…</td></tr>
+<tr><td class="mono">2026-11-22T16:34</td><td class="mono">gwt_390dc392c5c4</td><td class="mono">approval.requested</td><td class="mono">supervisor</td><td class="mono">343911e9d1e465721e…</td></tr>
 </tbody></table>
 
 <h2>它明确不做什么</h2>

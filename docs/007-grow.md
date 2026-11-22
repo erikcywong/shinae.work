@@ -132,3 +132,16 @@ python app/server.py                  # http://127.0.0.1:8787/grow.html
 2. **P1-2 Bitable 台账**：批次、任务、漂移三张表同步；字段映射见 §2，只写不读（避免两个写者）。
 3. **P1-3 采收 → 碳账本**：采收移交仓存后，把能耗/水耗带进 `carbon.compute`，让"雾化批次"有一张完整的 Scope 1/2/3 账。
 4. **P2 证据升级**：把"样本在界内"升级为"样本 + 人工巡检记录 + 图像"（当前只有前者，且没有图像能力）。
+
+## 10. 决策与部署状态（2026-11-23）
+
+- **面板形态（已决策）**：保持独立页 `/grow.html`，暂不并入 `web/app.js` 的 7 App。
+  理由：种植域的动作面（甘特 + 舱位 + 配方）与碳域差异太大，先独立跑通；P1-1 真实网关到位后再评估合并。
+- **标定入口（已交付，本地未发布）**：`tools/grow_calibrate.py` + [`grow-calibration.md`](grow-calibration.md)。
+  `--strict` 下每个数字必须带出处，否则阻断；工具只出补丁文本，不写代码。
+- **部署**：`docs/grow.html` 已随 `977ee64` 推送到 `main`，GitHub Pages build = **built**（源 `main /docs`）。
+- **已知阻塞**：`os.shinae.work` 在阿里云 DNS（`dns17/dns18.hichina.com`）里**没有记录**，
+  公共解析实测 NXDOMAIN；而 `erikcywong.github.io/shinae.work/*` 会 301 到该自定义域名。
+  **因此站点目前对外不可达**，页面本身是好的。修法二选一：
+  1. 阿里云 DNS 加一条 `os` → CNAME `erikcywong.github.io`（推荐，保留自定义域名）；
+  2. 在仓库 Pages 设置里先移除自定义域名（github.io 直连恢复，之后可再加回）。
